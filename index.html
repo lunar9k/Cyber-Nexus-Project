@@ -7,22 +7,24 @@
     <!-- Use Tailwind CSS for a professional and responsive design -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Define a new, dark color palette inspired by material.security */
+        /* --- Base App Styles (from previous version) --- */
         :root {
-            --bg: #000000;
-            --card: rgba(1, 1, 1, 0.4);
-            --border: rgba(255, 255, 255, 0.08);
-            --text-primary: #e5e7eb; /* Gray-200 */
-            --text-secondary: #9ca3af; /* Gray-400 */
-            --gradient-start: #a5b4fc; /* Indigo-300 */
-            --gradient-end: #8b5cf6; /* Violet-500 */
-            --highlight: #4ade80; /* Green-400 */
-            --danger: #ef4444; /* Red-500 */
+            --bg: #0d1117; /* Dark charcoal */
+            --card: #161b22; /* Slightly lighter dark for cards */
+            --border: #30363d; /* Dark gray border */
+            --text-primary: #e6edf3; /* Light gray text */
+            --text-secondary: #8b949e; /* Muted text */
+            --gradient-start: #0072b2; /* Palo Alto Networks blue */
+            --gradient-end: #00508a; /* Darker blue */
+            --highlight: #22c55e; /* Bright green accent */
+            --danger: #ef4444; /* Red for alerts */
+            --success: #22c55e;
             --radius: 12px;
             font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         }
         
         body {
+            /* The hero banner below will override this background, but the other styles are still needed */
             background-color: var(--bg);
             color: var(--text-primary);
             -webkit-font-smoothing: antialiased;
@@ -37,14 +39,251 @@
             width: 100%;
             max-width: 1280px;
         }
+        
+        /* --- NEW BANNER STYLES (from user's code) --- */
+        :root{
+            /* Namespace the new banner's variables to avoid conflicts */
+            --banner-bg1: #2b005b;
+            --banner-bg2: #6b00ff;
+            --banner-accent1: #00f0ff;
+            --banner-accent2: #ff5df7;
+            --banner-glass: rgba(255,255,255,0.06);
+            --banner-text: #eaf3ff;
+            --banner-muted: rgba(234,243,255,0.75);
+            --banner-max-width: 1200px;
+        }
 
+        /* The main container for the new banner hero section */
+        .banner-hero-container {
+            width: 100%;
+            max-width: var(--banner-max-width);
+            display:grid;
+            grid-template-columns: 1fr 520px;
+            gap:32px;
+            align-items:center;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Left visual column */
+        .visual{
+            position:relative;
+            min-height:420px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            perspective:1200px;
+        }
+        
+        .card-visual{
+            width:460px;
+            height:300px;
+            transform:rotateY(-12deg) rotateX(6deg);
+            transform-origin: left center;
+            position:relative;
+            z-index:5;
+        }
+
+        /* Laptop base */
+        .laptop{
+            width:100%;
+            height:100%;
+            border-radius:14px;
+            background: linear-gradient(180deg, rgba(18,6,46,0.95), rgba(44,4,70,0.95));
+            box-shadow:
+                0 40px 60px rgba(0,0,0,0.5),
+                inset 0 1px 0 rgba(255,255,255,0.03);
+            position:relative;
+            overflow:visible;
+        }
+
+        /* screen */
+        .screen{
+            position:absolute;
+            left:20px;
+            top:16px;
+            right:20px;
+            height:56%;
+            border-radius:8px;
+            background:linear-gradient(180deg,#071728 0%, #0f2940 100%);
+            box-shadow: 0 6px 30px rgba(108,0,255,0.16);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+
+        /* fake translucent overlay windows */
+        .overlay{
+            position:absolute;
+            width:82%;
+            height:66%;
+            border-radius:6px;
+            background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            left:9%;
+            top:18%;
+            display:flex;
+            align-items:center;
+            gap:12px;
+            padding:12px;
+            box-shadow: 0 8px 30px rgba(103,0,255,0.12);
+        }
+
+        .finger{
+            width:36%;
+            height:90%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            background: linear-gradient(180deg,#9df0ff 0%, #a5a9ff 50%, #c17bff 100%);
+            border-radius:8px;
+            box-shadow: 0 6px 22px rgba(157,240,255,0.12);
+        }
+
+        .finger svg{width:64px;height:64px;opacity:0.95}
+
+        .code-block{
+            flex:1;
+            height:80%;
+            border-radius:6px;
+            background: linear-gradient(180deg, rgba(0,0,0,0.14), rgba(255,255,255,0.02));
+            padding:10px;
+            color:var(--banner-muted);
+            font-size:12px;
+            line-height:1.25;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+        }
+
+        /* keyboard */
+        .keyboard{
+            width:92%;
+            height:40%;
+            position:absolute;
+            bottom:8px;
+            left:4%;
+            right:4%;
+            border-radius:6px;
+            background: linear-gradient(180deg,#0b0522 0%, #1a0835 100%);
+            padding:18px;
+            box-shadow: 0 28px 60px rgba(64,0,110,0.45);
+            display:grid;
+            grid-template-rows:auto 1fr;
+            gap:10px;
+        }
+
+        .keys{
+            width:100%;
+            height:100%;
+            background:
+                linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border-radius:6px;
+            display:grid;
+            grid-template-columns: repeat(12,1fr);
+            gap:8px;
+            padding:10px;
+        }
+
+        .keys > div{
+            background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.005));
+            border-radius:6px;
+            min-height:14px;
+            box-shadow: 0 2px 0 rgba(0,0,0,0.4) inset;
+        }
+
+        /* floating neon elements: lock, key, shield */
+        .neon {
+            position:absolute;
+            z-index:6;
+            filter:drop-shadow(0 12px 28px rgba(123,0,255,0.22));
+        }
+
+        .lock{
+            left:-6%;
+            bottom:2%;
+            transform:translateZ(20px) rotateY(6deg);
+        }
+
+        .key{
+            left:30%;
+            bottom:-6%;
+            transform:translateZ(10px) rotate(-8deg);
+        }
+
+        .shield{
+            right:-8%;
+            top:18%;
+            transform:translateZ(40px) rotateY(-20deg);
+            opacity:0.98;
+        }
+
+        /* right content column */
+        .content{
+            padding:48px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+            border-radius:12px;
+            display:flex;
+            flex-direction:column;
+            gap:18px;
+            align-self:center;
+            
+        }
+
+        .content h1{
+            font-weight:600;
+            font-size:48px;
+            letter-spacing:0.6px;
+            margin-bottom:8px;
+            color:var(--banner-text);
+        }
+
+        .content h2{
+            font-weight:500;
+            font-size:20px;
+            color:var(--banner-muted);
+            margin-bottom:6px;
+        }
+
+        .content p.lead{
+            color:rgba(234,243,255,0.82);
+            line-height:1.55;
+            max-width:460px;
+            font-size:15px;
+        }
+
+        /* subtle grid/trace lines at bottom left (to mimic circuits) */
+        .traces{
+            position:absolute;
+            left:16px;
+            bottom:8px;
+            z-index:2;
+            opacity:0.22;
+            width:60%;
+        }
+
+        /* responsiveness for the new banner */
+        @media (max-width:1100px){
+            .banner-hero-container{grid-template-columns: 1fr; gap:20px}
+            .content{order:2;padding:30px}
+            .visual{order:1;min-height:420px}
+        }
+
+        @media (max-width:520px){
+            .content h1{font-size:32px}
+            .card-visual{width:92%;height:260px;transform:rotateY(-6deg) rotateX(4deg)}
+            .overlay{width:84%}
+            .content{padding:20px}
+        }
+
+
+        /* --- Re-apply some original styles that might have been overridden --- */
         .card {
             background-color: var(--card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 10px 15px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
             transition: all 0.2s ease-in-out;
         }
 
@@ -59,11 +298,17 @@
             border-radius: 9999px; /* rounded-full */
             padding: 0.75rem 1.5rem;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid transparent;
         }
 
-        .btn-primary:hover {
+        .btn-primary:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border-color: var(--highlight);
+        }
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         .btn-ghost {
@@ -89,8 +334,8 @@
         
         /* Loading spinner animation */
         .loading-spinner {
-            border-top-color: var(--gradient-end);
-            border-left-color: var(--gradient-end);
+            border-top-color: var(--highlight);
+            border-left-color: var(--highlight);
             animation: spin 1s linear infinite;
         }
         @keyframes spin {
@@ -116,69 +361,201 @@
             width: 90%;
             border: 1px solid var(--border);
         }
+
+        /* Input field styling */
+        input, textarea, select {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            color: var(--text-primary);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            width: 100%;
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--gradient-start);
+            box-shadow: 0 0 0 2px rgba(0, 114, 178, 0.2);
+        }
+
+        /* Markdown-specific styling for AI reviewer output */
+        .markdown-container h1, .markdown-container h2, .markdown-container h3 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .markdown-container p {
+            margin-bottom: 1rem;
+        }
+        .markdown-container ul {
+            list-style-type: disc;
+            margin-left: 2rem;
+        }
+        .markdown-container li {
+            margin-bottom: 0.5rem;
+        }
+        .markdown-container pre {
+            background-color: #0d121c;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            color: #d1d5db;
+        }
+
+        /* Tab styling */
+        .tab-button.active {
+            border-bottom: 2px solid var(--gradient-start);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
     </style>
 </head>
-<body class="bg-gray-950 text-gray-200">
+<body style="background: radial-gradient(1200px 400px at 85% 8%, rgba(0,255,255,0.12), transparent 6%), linear-gradient(135deg,var(--banner-bg1) 0%, #3b0ea8 30%, var(--banner-bg2) 100%);">
     <div class="container mx-auto space-y-12 md:space-y-16">
-
-        <!-- Header -->
-        <header class="flex justify-between items-center py-4">
-            <a class="flex items-center gap-4 text-white no-underline" href="#">
-                <div class="w-12 h-12 rounded-lg flex items-center justify-center font-bold text-xl bg-gradient-to-r from-indigo-500 to-violet-500 shadow-lg">CN</div>
-                <div>
-                    <div class="font-extrabold text-xl">CyberNexus</div>
-                    <div class="text-xs text-gray-400">All-in-One Cyber Tool</div>
+        <!-- NEW BANNER SECTION START -->
+        <header>
+            <div class="banner-hero-container" role="main">
+                <div class="visual" aria-hidden="true">
+                    <div class="card-visual">
+                        <div class="laptop">
+                            <div class="screen">
+                                <div class="overlay">
+                                    <div class="finger" title="Fingerprint">
+                                        <!-- simple fingerprint svg -->
+                                        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                            <defs>
+                                                <linearGradient id="g1" x1="0" x2="1">
+                                                    <stop offset="0" stop-color="#00f0ff"/>
+                                                    <stop offset="1" stop-color="#c17bff"/>
+                                                </linearGradient>
+                                            </defs>
+                                            <g fill="none" stroke="url(#g1)" stroke-width="2.2" stroke-linecap="round">
+                                                <path d="M32 12c-6 0-15 5-15 18s5 15 8 18 3 6 9 6 10-4 12-8 6-12 6-18-9-16-20-16z"/>
+                                                <path d="M24 20c0-4 6-8 8-8s8 3 8 8"/>
+                                                <path d="M20 32c0-6 4-12 12-12s12 6 12 12"/>
+                                                <path d="M28 46c2 2 4 4 8 4s6-2 8-6"/>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <div class="code-block" aria-hidden="true">
+                                        <!-- small faux-lines to mimic code -->
+                                        <div style="width:80%;height:10px;background:linear-gradient(90deg, rgba(255,255,255,0.06),rgba(255,255,255,0.03));border-radius:4px;margin-bottom:8px"></div>
+                                        <div style="width:58%;height:8px;background:linear-gradient(90deg, rgba(255,255,255,0.05),rgba(255,255,255,0.02));border-radius:4px;margin-bottom:6px"></div>
+                                        <div style="width:90%;height:8px;background:linear-gradient(90deg, rgba(255,255,255,0.04),rgba(255,255,255,0.01));border-radius:4px"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="keyboard" aria-hidden="true">
+                                <div style="height:18px;width:60%;background:linear-gradient(90deg, rgba(255,255,255,0.02),transparent);border-radius:6px;"></div>
+                                <div class="keys" aria-hidden="true">
+                                    <div style="grid-column:span 2;"></div>
+                                    <div></div><div></div><div></div><div></div><div></div><div></div>
+                                    <div></div><div></div><div></div><div></div><div style="grid-column:span 2;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- neon lock -->
+                    <div class="neon lock" style="width:72px; height:72px;">
+                        <svg viewBox="0 0 64 64" width="72" height="72" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="lg1" x1="0" x2="1">
+                                    <stop offset="0" stop-color="#6b00ff"/>
+                                    <stop offset="1" stop-color="#00f0ff"/>
+                                </linearGradient>
+                            </defs>
+                            <rect x="12" y="24" width="40" height="28" rx="5" fill="url(#lg1)" opacity="0.95" />
+                            <path d="M22 24v-6a10 10 0 0 1 20 0v6" stroke="#baffff" stroke-width="3" stroke-linecap="round" fill="none"/>
+                            <circle cx="32" cy="38" r="3" fill="#0b0820"/>
+                        </svg>
+                    </div>
+                    <!-- neon key -->
+                    <div class="neon key" style="width:120px;height:44px;">
+                        <svg viewBox="0 0 240 88" xmlns="http://www.w3.org/2000/svg" width="120" height="44">
+                            <defs>
+                                <linearGradient id="lgk" x1="0" x2="1"><stop offset="0" stop-color="#00f0ff"/><stop offset="1" stop-color="#c17bff"/></linearGradient>
+                            </defs>
+                            <ellipse cx="44" cy="44" rx="26" ry="22" fill="url(#lgk)" opacity="0.98"/>
+                            <rect x="64" y="36" width="108" height="16" rx="6" fill="url(#lgk)"/>
+                            <rect x="172" y="36" width="10" height="10" fill="#0d0620"/>
+                            <rect x="184" y="36" width="10" height="10" fill="#0d0620"/>
+                        </svg>
+                    </div>
+                    <!-- transparent shield -->
+                    <div class="neon shield" style="width:140px;height:180px;">
+                        <svg viewBox="0 0 80 100" xmlns="http://www.w3.org/2000/svg" width="140" height="180">
+                            <defs>
+                                <linearGradient id="shg" x1="0" x2="1">
+                                    <stop offset="0" stop-color="#ff8ef7"/>
+                                    <stop offset="1" stop-color="#00f0ff"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M40 4l28 10v18c0 24-28 36-28 36s-28-12-28-36V14z" fill="none" stroke="url(#shg)" stroke-width="2.8" stroke-linejoin="round"/>
+                            <path d="M26 46l8 8 20-24" fill="none" stroke="#bffaff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <!-- circuit traces (decor) -->
+                    <svg class="traces" viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <g stroke="rgba(255,255,255,0.06)" stroke-width="2" fill="none" stroke-linecap="round">
+                            <path d="M8 30h40v22h30v18h60" />
+                            <path d="M150 30h36v40h40" />
+                            <path d="M8 70h80v10h30" />
+                        </g>
+                    </svg>
                 </div>
-            </a>
-            <nav class="hidden md:flex items-center gap-6 text-sm">
-                <a class="text-gray-400 hover:text-white transition-colors" href="#checkup-info">What is Cyber Hygiene?</a>
-                <a class="text-gray-400 hover:text-white transition-colors" href="#checkup">Checkup</a>
-                <a class="text-gray-400 hover:text-white transition-colors" href="#cryptovault-info">What is CryptoVault?</a>
-                <a class="text-gray-400 hover:text-white transition-colors" href="#cryptovault">CryptoVault</a>
-                <a class="text-gray-400 hover:text-white transition-colors" href="#about-me">About Me</a>
-                <button class="btn-ghost" onclick="showModal('Login is not configured for this version.')">Log In</button>
-            </nav>
-            <!-- Mobile nav toggle for future use -->
-        </header>
-
-        <!-- Hero Section -->
-        <section class="card p-8 md:p-12 text-center">
-            <h1 class="text-4xl md:text-6xl font-extrabold mb-4">
-                <span class="text-gradient">Your Personal Cyber Security Toolkit</span>
-            </h1>
-            <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto">
-                A complete suite for personal and professional cyber hygiene, including a security checkup and a secure file encryption tool.
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8">
-                <button class="btn-primary" onclick="document.getElementById('checkup').scrollIntoView({behavior:'smooth'})">Start Checkup</button>
-                <button class="btn-ghost" onclick="document.getElementById('cryptovault').scrollIntoView({behavior:'smooth'})">Secure a File</button>
+                <div class="content" role="article" aria-label="Data Security content">
+                    <h1>CyberNexus</h1>
+                    <h2>Your All-in-One Cyber Security Toolkit</h2>
+                    <p class="lead">
+                        From performing a quick cyber hygiene checkup to encrypting sensitive files and reviewing code for security flaws, CyberNexus provides a suite of tools to help you stay safe in the digital world.
+                    </p>
+                </div>
             </div>
-        </section>
+        </header>
+        <!-- NEW BANNER SECTION END -->
 
-        <main class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
-            <!-- What is Cyber Hygiene? -->
-            <section id="checkup-info" class="card p-6 md:p-8 col-span-1 lg:col-span-2">
-                <h2 class="text-3xl font-bold mb-4">What is Cyber Hygiene?</h2>
-                <div class="grid md:grid-cols-2 gap-8 text-gray-400">
-                    <p>Cyber hygiene refers to the practices and steps that users of computers and other devices take to maintain system health and improve online security. Just like personal hygiene helps prevent sickness, cyber hygiene helps prevent data breaches, malware infections, and identity theft.</p>
-                    <p>This checkup is designed to help you identify and correct common security weaknesses, from weak passwords to poor data backup habits. Regularly performing a cyber hygiene checkup is crucial because the digital world is constantly changing, and staying on top of your security is the best way to protect your personal and professional life.</p>
-                </div>
-            </section>
+        <!-- Main Content with Tabs -->
+        <main class="card p-6 md:p-8">
+            <!-- Tab Navigation -->
+            <div class="flex border-b border-gray-700 mb-6 md:mb-8">
+                <button id="tab-checkup" class="tab-button active flex-1 py-3 px-4 text-center text-gray-400 hover:text-white transition-colors">
+                    Cyber Checkup
+                </button>
+                <button id="tab-cryptovault" class="tab-button flex-1 py-3 px-4 text-center text-gray-400 hover:text-white transition-colors">
+                    CryptoVault
+                </button>
+                <button id="tab-security-reviewer" class="tab-button flex-1 py-3 px-4 text-center text-gray-400 hover:text-white transition-colors">
+                    AI Security Reviewer
+                </button>
+            </div>
 
-            <!-- Cyber Hygiene Checkup Section -->
-            <section id="checkup" class="card p-6 md:p-8 col-span-1 lg:col-span-2">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div class="lg:col-span-2">
-                        <h2 class="text-3xl font-bold mb-2">Cyber Hygiene Checkup</h2>
-                        <p class="text-gray-400 mb-6">A quick checklist with instant scoring and tailored recommendations for your cyber security posture.</p>
+            <!-- Tab Content -->
+            <div id="tab-content-checkup" class="tab-content">
+                <!-- Cyber Checkup Description -->
+                <section class="mb-8">
+                    <h2 class="text-3xl font-bold mb-4">What is Cyber Hygiene?</h2>
+                    <div class="grid md:grid-cols-2 gap-8 text-gray-400">
+                        <p>Cyber hygiene refers to the practices and steps that users of computers and other devices take to maintain system health and improve online security. Just like personal hygiene helps prevent sickness, cyber hygiene helps prevent data breaches, malware infections, and identity theft.</p>
+                        <p>This checkup is designed to help you identify and correct common security weaknesses, from weak passwords to poor data backup habits. Regularly performing a cyber hygiene checkup is crucial because the digital world is constantly changing, and staying on top of your security is the best way to protect your personal and professional life.</p>
+                    </div>
+                </section>
 
-                        <div class="space-y-4">
+                <!-- Cyber Hygiene Checkup Section -->
+                <section>
+                    <h2 class="text-3xl font-bold mb-2">Perform a Checkup</h2>
+                    <p class="text-gray-400 mb-6">A quick checklist with instant scoring and tailored recommendations for your cyber security posture.</p>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2 space-y-4">
                             <h3 class="font-bold text-lg text-gray-200">Client Info</h3>
                             <div class="grid md:grid-cols-2 gap-4">
-                                <input id="name" class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" type="text" placeholder="Client Name">
-                                <input id="email" class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" type="email" placeholder="client@email.com">
-                                <input id="date" class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" type="date">
-                                <input id="business" class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" type="text" placeholder="Organization Name">
+                                <input id="name" type="text" placeholder="Client Name">
+                                <input id="email" type="email" placeholder="client@email.com">
+                                <input id="date" type="date">
+                                <input id="business" type="text" placeholder="Organization Name">
                             </div>
 
                             <div class="mt-6 space-y-4">
@@ -188,117 +565,172 @@
 
                             <div class="mt-6 space-y-4">
                                 <h3 class="font-bold text-lg text-gray-200">Additional Notes</h3>
-                                <textarea id="notes" class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" rows="4" placeholder="Any concerns, incidents, or extra details..."></textarea>
+                                <textarea id="notes" rows="4" placeholder="Any concerns, incidents, or extra details..."></textarea>
                             </div>
                         </div>
+                        
+                        <aside class="lg:col-span-1 flex flex-col justify-between">
+                            <div class="card p-6 flex-1 flex flex-col items-center justify-center text-center">
+                                <div class="w-32 h-32 rounded-full flex items-center justify-center text-3xl font-extrabold mb-4 border-2 border-gray-700" id="scoreBox">
+                                    — / 22
+                                </div>
+                                <div class="text-gray-400 mb-2">Overall Security</div>
+                                <span class="px-4 py-1 text-sm font-bold rounded-full text-white" id="scoreBadge" style="background-color: #555;">—</span>
+                                
+                                <div class="mt-8 w-full" id="recSection">
+                                    <h4 class="font-bold text-md text-gray-200 mb-2">Recommendations</h4>
+                                    <div id="recList" class="text-gray-400 text-sm text-left list-disc list-inside"></div>
+                                </div>
+                            </div>
+                            <div class="mt-6 flex flex-col sm:flex-row gap-4">
+                                <button id="copyReportBtn" class="btn-ghost">Copy Report</button>
+                                <button id="downloadReportBtn" class="btn-primary">Download Report</button>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
+            </div>
 
-                        <div class="flex gap-4 mt-6">
-                            <button class="btn-primary" onclick="calculateScore()">Submit & Score</button>
-                            <button class="btn-ghost" onclick="resetForm()">Reset</button>
+            <div id="tab-content-cryptovault" class="tab-content hidden">
+                 <!-- CryptoVault Description -->
+                <section class="mb-8">
+                    <h2 class="text-3xl font-bold mb-4">What is CryptoVault?</h2>
+                    <div class="grid md:grid-cols-2 gap-8 text-gray-400">
+                        <div>
+                            <p class="mb-4">CryptoVault is a client-side file encryption tool. This means all the encryption and decryption happens right here in your browser, on your device. Your files and passwords are never sent to a server. This ensures your data remains completely private and secure, giving you full control over your information.</p>
+                            <p class="mb-4">This is a powerful way to protect sensitive documents before storing them in the cloud or sending them to others. Just remember the password you use—it's the only way to get your file back!</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-200 mb-2">How to Use</h3>
+                            <ul class="list-disc list-inside space-y-2 mb-4">
+                                <li>**To Encrypt:**
+                                    <ul class="list-disc list-inside ml-4">
+                                        <li>Choose a file to encrypt.</li>
+                                        <li>Enter a strong password that you will remember.</li>
+                                        <li>Click the "Encrypt" button to download your new `.crypt` file.</li>
+                                    </ul>
+                                </li>
+                                <li>**To Decrypt:**
+                                    <ul class="list-disc list-inside ml-4">
+                                        <li>Choose the encrypted `.crypt` file.</li>
+                                        <li>Enter the *exact same* password you used to encrypt it.</li>
+                                        <li>Click the "Decrypt" button to download the original file.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CryptoVault Section -->
+                <section>
+                    <h2 class="text-3xl font-bold mb-2">Secure Your Files</h2>
+                    <p class="text-gray-400 mb-6">Encrypt and decrypt files directly in your browser. All processing is done locally and privately.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Encryption Card -->
+                        <div class="card p-6 flex flex-col">
+                            <h3 class="text-2xl font-bold mb-4">Encrypt File</h3>
+                            <label for="encryptFile" class="w-full p-4 rounded-lg text-center text-gray-400 border-2 border-dashed border-gray-700 hover:border-violet-500 transition-colors cursor-pointer">
+                                <span id="encryptFileName">Choose a file to encrypt</span>
+                            </label>
+                            <input type="file" id="encryptFile" class="hidden" />
+                            
+                            <input type="password" id="encryptPassword" placeholder="Enter a strong password" class="mt-4" autocomplete="off" />
+                            
+                            <button id="encryptBtn" class="btn-primary w-full mt-6">
+                                Encrypt
+                            </button>
+                            
+                            <div id="encryptStatus" class="mt-4 text-center text-sm font-medium text-gray-400"></div>
+                        </div>
+
+                        <!-- Decryption Card -->
+                        <div class="card p-6 flex flex-col">
+                            <h3 class="text-2xl font-bold mb-4">Decrypt File</h3>
+                            <label for="decryptFile" class="w-full p-4 rounded-lg text-center text-gray-400 border-2 border-dashed border-gray-700 hover:border-violet-500 transition-colors cursor-pointer">
+                                <span id="decryptFileName">Choose a file to decrypt</span>
+                            </label>
+                            <input type="file" id="decryptFile" class="hidden" />
+
+                            <input type="password" id="decryptPassword" placeholder="Enter the decryption password" class="mt-4" autocomplete="off" />
+                            
+                            <button id="decryptBtn" class="btn-primary w-full mt-6">
+                                Decrypt
+                            </button>
+                            
+                            <div id="decryptStatus" class="mt-4 text-center text-sm font-medium text-gray-400"></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="tab-content-security-reviewer" class="tab-content hidden">
+                 <!-- AI Code Security Reviewer Description -->
+                <section class="mb-8">
+                    <h2 class="text-3xl font-bold mb-4">What is the AI Security Reviewer?</h2>
+                    <div class="text-gray-400">
+                        <p class="mb-4">This tool is an AI-powered code analysis assistant. It's designed to help developers and security enthusiasts identify common security vulnerabilities in their code before deployment. By leveraging large language models, the reviewer can analyze code for potential flaws like SQL injection, XSS, and hardcoded secrets.</p>
+                        <p class="mb-4">This can be a crucial step in the development lifecycle, helping you write more robust and secure applications. While it's a powerful tool, it should always be used as a supplement to professional security audits and best practices, not as a replacement.</p>
+                    </div>
+                </section>
+                 <!-- AI Code Security Reviewer Section -->
+                <section>
+                    <h2 class="text-3xl font-bold mb-4">Review Your Code</h2>
+                    <p class="text-lg text-gray-400 mt-4 max-w-2xl">
+                        Paste your code below and get an instant security review. Our AI-powered tool will identify potential vulnerabilities and provide recommendations for a more secure codebase.
+                    </p>
+                    
+                    <div class="mt-6 space-y-6">
+                        <div>
+                            <label for="code-language" class="block text-sm font-medium text-gray-400 mb-2">Select Language</label>
+                            <select
+                                id="code-language"
+                                class="w-full bg-gray-900 border border-gray-700 text-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-violet-500"
+                            >
+                                <option value="javascript">JavaScript</option>
+                                <option value="python">Python</option>
+                                <option value="java">Java</option>
+                                <option value="csharp">C#</option>
+                                <option value="php">PHP</option>
+                                <option value="ruby">Ruby</option>
+                                <option value="go">Go</option>
+                                <option value="rust">Rust</option>
+                                <option value="html">HTML</option>
+                                <option value="sql">SQL</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="code-input" class="block text-sm font-medium text-gray-400 mb-2">Paste your code here</label>
+                            <textarea
+                                id="code-input"
+                                rows="15"
+                                class="w-full bg-gray-900 border border-gray-700 text-gray-200 rounded-lg p-4 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-violet-500"
+                                placeholder="e.g., function mySecureFunction(user_input) { ... }"
+                            ></textarea>
+                        </div>
+
+                        <button
+                            id="review-button"
+                            class="btn-primary w-full text-center"
+                        >
+                            Review Code for Security Flaws
+                        </button>
+                    </div>
+
+                    <!-- Results Section -->
+                    <div id="review-results-container" class="hidden mt-12">
+                        <h2 class="text-3xl font-bold mb-4 text-gradient">Review Results</h2>
+                        <div class="card p-6 md:p-8 markdown-container" id="review-results">
                         </div>
                     </div>
                     
-                    <aside class="lg:col-span-1 flex flex-col justify-between">
-                        <div class="card p-6 flex-1 flex flex-col items-center justify-center text-center">
-                            <div class="w-32 h-32 rounded-full flex items-center justify-center text-3xl font-extrabold mb-4 border-2 border-gray-700" id="scoreBox">
-                                — / 22
-                            </div>
-                            <div class="text-gray-400 mb-2">Overall Security</div>
-                            <span class="px-4 py-1 text-sm font-bold rounded-full text-white" id="scoreBadge" style="background-color: #555;">—</span>
-                            
-                            <div class="mt-8 w-full" id="recSection">
-                                <h4 class="font-bold text-md text-gray-200 mb-2">Recommendations</h4>
-                                <div id="recList" class="text-gray-400 text-sm text-left list-disc list-inside"></div>
-                            </div>
-                        </div>
-                        <div class="mt-6 flex flex-col sm:flex-row gap-4">
-                            <button class="btn-ghost" onclick="copyReport()">Copy Report</button>
-                            <button class="btn-primary" onclick="downloadReport()">Download Report</button>
-                        </div>
-                    </aside>
-                </div>
-            </section>
-
-            <!-- What is the CryptoVault? -->
-            <section id="cryptovault-info" class="card p-6 md:p-8 col-span-1 lg:col-span-2">
-                <h2 class="text-3xl font-bold mb-4">What is CryptoVault?</h2>
-                <div class="grid md:grid-cols-2 gap-8 text-gray-400">
-                    <div>
-                        <p class="mb-4">CryptoVault is a client-side file encryption tool. This means all the encryption and decryption happens right here in your browser, on your device. Your files and passwords are never sent to a server. This ensures your data remains completely private and secure, giving you full control over your information.</p>
-                        <p class="mb-4">This is a powerful way to protect sensitive documents before storing them in the cloud or sending them to others. Just remember the password you use—it's the only way to get your file back!</p>
+                    <!-- Error message display for reviewer -->
+                    <div id="reviewer-error-message" class="hidden mt-8 text-center text-red-500">
                     </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-200 mb-2">How to Use</h3>
-                        <ul class="list-disc list-inside space-y-2 mb-4">
-                            <li>**To Encrypt:**
-                                <ul class="list-disc list-inside ml-4">
-                                    <li>Choose a file to encrypt.</li>
-                                    <li>Enter a strong password that you will remember.</li>
-                                    <li>Click the "Encrypt" button to download your new `.crypt` file.</li>
-                                </ul>
-                            </li>
-                            <li>**To Decrypt:**
-                                <ul class="list-disc list-inside ml-4">
-                                    <li>Choose the encrypted `.crypt` file.</li>
-                                    <li>Enter the *exact same* password you used to encrypt it.</li>
-                                    <li>Click the "Decrypt" button to download the original file.</li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <h3 class="text-xl font-bold text-gray-200 mb-2">What can you encrypt?</h3>
-                        <p>This tool can encrypt any type of file. The file type is preserved so you can decrypt it back to its original format. This includes:</p>
-                        <ul class="list-disc list-inside space-y-1 mt-2">
-                            <li>Documents (.docx, .pdf, .txt, .csv)</li>
-                            <li>Images (.jpg, .png, .gif)</li>
-                            <li>Videos (.mp4, .mov)</li>
-                            <li>Spreadsheets (.xlsx)</li>
-                            <li>Code files (.js, .html, .py)</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <!-- CryptoVault Section -->
-            <section id="cryptovault" class="card p-6 md:p-8 col-span-1 lg:col-span-1">
-                <h2 class="text-3xl font-bold mb-2">CryptoVault</h2>
-                <p class="text-gray-400 mb-6">Securely encrypt and decrypt files directly in your browser. All processing is done locally and privately.</p>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Encryption Card -->
-                    <div class="card p-6 flex flex-col">
-                        <h3 class="text-2xl font-bold mb-4">Encrypt File</h3>
-                        <label for="encryptFile" class="w-full p-4 rounded-lg text-center text-gray-400 border-2 border-dashed border-gray-700 hover:border-violet-500 transition-colors cursor-pointer">
-                            <span id="encryptFileName">Choose a file to encrypt</span>
-                        </label>
-                        <input type="file" id="encryptFile" class="hidden" />
-                        
-                        <input type="password" id="encryptPassword" placeholder="Enter a strong password" class="w-full p-3 mt-4 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-500" autocomplete="off" />
-                        
-                        <button id="encryptBtn" class="btn-primary w-full mt-6">
-                            Encrypt
-                        </button>
-                        
-                        <div id="encryptStatus" class="mt-4 text-center text-sm font-medium text-gray-400"></div>
-                    </div>
-
-                    <!-- Decryption Card -->
-                    <div class="card p-6 flex flex-col">
-                        <h3 class="text-2xl font-bold mb-4">Decrypt File</h3>
-                        <label for="decryptFile" class="w-full p-4 rounded-lg text-center text-gray-400 border-2 border-dashed border-gray-700 hover:border-violet-500 transition-colors cursor-pointer">
-                            <span id="decryptFileName">Choose a file to decrypt</span>
-                        </label>
-                        <input type="file" id="decryptFile" class="hidden" />
-
-                        <input type="password" id="decryptPassword" placeholder="Enter the decryption password" class="w-full p-3 mt-4 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-500" autocomplete="off" />
-                        
-                        <button id="decryptBtn" class="btn-primary w-full mt-6">
-                            Decrypt
-                        </button>
-                        
-                        <div id="decryptStatus" class="mt-4 text-center text-sm font-medium text-gray-400"></div>
-                    </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </main>
         
         <!-- About Me Section -->
@@ -313,12 +745,6 @@
                 <p>This CyberNexus tool is a small part of that mission, designed to help individuals and small businesses improve their online security posture and protect their data.</p>
                 <p>You can connect with me and learn more about my work on my <a href="https://www.linkedin.com/in/lalit-kudmethe-189910312/" target="_blank" class="text-indigo-400 hover:text-indigo-300 transition-colors">LinkedIn profile</a>.</p>
             </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="card p-6 md:p-8 max-w-4xl mx-auto mt-12">
-            <h2 class="text-3xl font-bold mb-4 text-center">About this tool</h2>
-            <p class="text-gray-400 text-center max-w-2xl mx-auto mb-8">This single-file tool is built for clients and consultants who want a clean, professional single-page app to score cyber hygiene and securely manage files. It runs entirely in the browser and stores no data remotely.</p>
         </section>
 
         <!-- Download link for CryptoVault (hidden until a file is ready) -->
@@ -337,6 +763,34 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Tab Switching Logic ---
+            const tabs = {
+                'tab-checkup': 'tab-content-checkup',
+                'tab-cryptovault': 'tab-content-cryptovault',
+                'tab-security-reviewer': 'tab-content-security-reviewer'
+            };
+
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            function switchTab(activeTabId) {
+                // Deactivate all buttons and hide all content
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.add('hidden'));
+
+                // Activate the selected tab and show its content
+                document.getElementById(activeTabId).classList.add('active');
+                document.getElementById(tabs[activeTabId]).classList.remove('hidden');
+            }
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    switchTab(button.id);
+                });
+            });
+
+
             // --- Cyber Checkup Functionality ---
             // Questions and corresponding recommendation messages
             const questions = [
@@ -494,30 +948,6 @@
             }
 
             // report copy/download
-            function copyReport(){
-                if(!window.latestReport){ 
-                    showModal("Please submit the checkup form first to generate a report.");
-                    return; 
-                }
-                const rpt = buildPlainReport(window.latestReport);
-                navigator.clipboard.writeText(rpt).then(()=>{
-                    showModal('Report copied to clipboard. You can now paste it into an email or document.');
-                }, ()=>{ showModal('Unable to copy report. Please try again.'); });
-            }
-
-            function downloadReport(){
-                if(!window.latestReport){ 
-                    showModal("Please submit the checkup form first to generate a report.");
-                    return; 
-                }
-                const rpt = buildPlainReport(window.latestReport);
-                const blob = new Blob([rpt], {type:'text/plain;charset=utf-8'});
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url; a.download = (window.latestReport.meta.name || 'checkup') + '_cyber_report.txt';
-                document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-            }
-
             function buildPlainReport(r){
                 if(!r) return '';
                 return `Cyber Hygiene Checkup Report
@@ -536,6 +966,57 @@ ${r.notes}
 
 Generated with CyberNexus Checkup`;
             }
+
+            // FIXED: Copy Report function to be more reliable
+            function copyReport(){
+                if(!window.latestReport){
+                    showModal("Please answer at least one question to generate a report before copying.");
+                    return;
+                }
+                const rpt = buildPlainReport(window.latestReport);
+                
+                // Create a temporary textarea element to copy from
+                const tempTextarea = document.createElement('textarea');
+                tempTextarea.value = rpt;
+                tempTextarea.style.position = 'fixed';
+                tempTextarea.style.left = '-9999px';
+                document.body.appendChild(tempTextarea);
+            
+                tempTextarea.select();
+                try {
+                    const successful = document.execCommand('copy');
+                    if (successful) {
+                        showModal('Report copied to clipboard. You can now paste it into an email or document.');
+                    } else {
+                        showModal('Copy failed. Your browser may not support this feature or you may need to grant clipboard access.');
+                    }
+                } catch (err) {
+                    console.error('Copy failed:', err);
+                    showModal('Copy failed. An error occurred.');
+                } finally {
+                    document.body.removeChild(tempTextarea);
+                }
+            }
+
+            // FIXED: Download Report function to be more reliable
+            function downloadReport(){
+                if(!window.latestReport){ 
+                    showModal("Please answer at least one question to generate a report before downloading.");
+                    return; 
+                }
+                const rpt = buildPlainReport(window.latestReport);
+                const blob = new Blob([rpt], {type:'text/plain;charset=utf-8'});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                // Use a more robust filename
+                const filename = (window.latestReport.meta.name.replace(/[^a-z0-9]/gi, '_') || 'checkup') + '_cyber_report.txt';
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                URL.revokeObjectURL(url);
+            }
             
             // UX: live update score as radios change
             document.addEventListener('change', (e)=>{
@@ -544,6 +1025,11 @@ Generated with CyberNexus Checkup`;
                     window.__liveDeb = setTimeout(()=>{ calculateScore(); }, 300);
                 }
             });
+
+            // Add event listeners to the report buttons
+            document.getElementById('copyReportBtn').addEventListener('click', copyReport);
+            document.getElementById('downloadReportBtn').addEventListener('click', downloadReport);
+
 
             // --- CryptoVault Functionality ---
             // UI Elements
@@ -569,9 +1055,13 @@ Generated with CyberNexus Checkup`;
             // Helper function to update the button status (loading, text)
             function updateButtonStatus(button, statusElement, text, isLoading = false, isError = false) {
                 button.disabled = isLoading;
-                statusElement.innerHTML = isLoading ? `
-                    <div class="loading-spinner w-5 h-5 border-4 border-gray-500 rounded-full mx-auto"></div>
+                button.innerHTML = isLoading ? `
+                    <div class="flex items-center justify-center">
+                        <div class="loading-spinner w-5 h-5 border-4 border-white rounded-full"></div>
+                        <span class="ml-2">Processing...</span>
+                    </div>
                 ` : text;
+                statusElement.textContent = isError ? text : '';
                 if (isError) {
                     statusElement.classList.remove('text-gray-400');
                     statusElement.classList.add('text-red-500');
@@ -610,7 +1100,7 @@ Generated with CyberNexus Checkup`;
                     return updateButtonStatus(encryptBtn, encryptStatus, 'Please select a file and enter a password.', false, true);
                 }
 
-                updateButtonStatus(encryptBtn, encryptStatus, '', true);
+                updateButtonStatus(encryptBtn, encryptStatus, 'Encrypting...', true);
 
                 try {
                     const fileData = await file.arrayBuffer();
@@ -643,7 +1133,7 @@ Generated with CyberNexus Checkup`;
 
                     const combinedData = new Blob([salt, iv, metadataLengthBuffer, metadataBuffer, new Uint8Array(encryptedData)]);
                     triggerDownload(combinedData, file.name + '.crypt', encryptStatus, downloadLink);
-                    updateButtonStatus(encryptBtn, encryptStatus, '', false);
+                    updateButtonStatus(encryptBtn, encryptStatus, 'Encrypt', false);
 
                 } catch (error) {
                     console.error('Encryption failed:', error);
@@ -665,7 +1155,7 @@ Generated with CyberNexus Checkup`;
                     return updateButtonStatus(decryptBtn, decryptStatus, 'Please select a file and enter a password.', false, true);
                 }
 
-                updateButtonStatus(decryptBtn, decryptStatus, '', true);
+                updateButtonStatus(decryptBtn, decryptStatus, 'Decrypting...', true);
 
                 try {
                     const encryptedBuffer = await file.arrayBuffer();
@@ -698,13 +1188,141 @@ Generated with CyberNexus Checkup`;
                     );
                     const decryptedBlob = new Blob([decryptedData], { type: metadata.type });
                     triggerDownload(decryptedBlob, metadata.name, decryptStatus, downloadLink);
-                    updateButtonStatus(decryptBtn, decryptStatus, '', false);
+                    updateButtonStatus(decryptBtn, decryptStatus, 'Decrypt', false);
 
                 } catch (error) {
                     console.error('Decryption failed:', error);
                     updateButtonStatus(decryptBtn, decryptStatus, 'Decryption failed. Please check the password or file.', false, true);
                 }
             });
+
+
+            // --- AI Security Reviewer Functionality ---
+            const codeTextarea = document.getElementById('code-input');
+            const languageSelect = document.getElementById('code-language');
+            const reviewButton = document.getElementById('review-button');
+            const resultsContainer = document.getElementById('review-results-container');
+            const reviewResultsDiv = document.getElementById('review-results');
+            const reviewerErrorMessageDiv = document.getElementById('reviewer-error-message');
+
+            const handleCodeReview = async () => {
+                const code = codeTextarea.value;
+                const language = languageSelect.value;
+                
+                // Clear previous results and errors
+                reviewResultsDiv.innerHTML = '';
+                reviewerErrorMessageDiv.classList.add('hidden');
+                resultsContainer.classList.add('hidden');
+
+                if (!code.trim()) {
+                    reviewerErrorMessageDiv.textContent = 'Please enter some code to review.';
+                    reviewerErrorMessageDiv.classList.remove('hidden');
+                    return;
+                }
+                
+                // Show loading state
+                reviewButton.disabled = true;
+                reviewButton.innerHTML = '<div class="flex items-center justify-center"><div class="loading-spinner w-5 h-5 border-4 border-white rounded-full"></div><span class="ml-2">Reviewing...</span></div>';
+
+                // Construct the prompt for the Gemini API
+                const prompt = `Act as a senior cybersecurity analyst. Your task is to review the following ${language} code for potential security vulnerabilities. 
+                Identify any flaws, explain the nature of the vulnerability, and provide specific, actionable code-based recommendations for how to fix it. 
+                The vulnerabilities to look for include, but are not limited to:
+                - SQL injection
+                - Cross-Site Scripting (XSS)
+                - Insecure deserialization
+                - Cross-Site Request Forgery (CSRF)
+                - Broken authentication or access control
+                - Hardcoded credentials or secrets
+                - Use of insecure functions or libraries
+                - File path traversal
+                - Command injection
+                
+                Please present your findings in Markdown format, with clear headings for each vulnerability found. If no major flaws are detected, state that the code appears to be secure.
+
+                Here is the code to review:
+                \`\`\`${language}
+                ${code}
+                \`\`\`
+                `;
+
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                    generationConfig: {
+                        responseMimeType: "text/plain", 
+                    },
+                };
+
+                const apiKey = ''; // Provided by the environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                let retries = 0;
+                const maxRetries = 3;
+                const backoffDelay = 1000; // 1 second
+
+                let reviewResult = null;
+                let error = null;
+
+                while (retries < maxRetries) {
+                    try {
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload),
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`API call failed with status: ${response.status}`);
+                        }
+
+                        const result = await response.json();
+
+                        if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0) {
+                            reviewResult = result.candidates[0].content.parts[0].text;
+                        } else {
+                            error = 'Unable to get a valid response from the API. Please try again.';
+                        }
+                        break; // Exit the loop on success
+                    } catch (err) {
+                        console.error(`Attempt ${retries + 1} failed:`, err);
+                        retries++;
+                        if (retries < maxRetries) {
+                            await new Promise(res => setTimeout(res, backoffDelay * Math.pow(2, retries - 1)));
+                        } else {
+                            error = 'Failed to connect to the API after multiple retries.';
+                        }
+                    }
+                }
+                
+                // Hide loading state
+                reviewButton.disabled = false;
+                reviewButton.innerHTML = 'Review Code for Security Flaws';
+
+                // Display results or error
+                if (error) {
+                    reviewerErrorMessageDiv.textContent = error;
+                    reviewerErrorMessageDiv.classList.remove('hidden');
+                } else if (reviewResult) {
+                    reviewResultsDiv.innerHTML = renderMarkdown(reviewResult);
+                    resultsContainer.classList.remove('hidden');
+                }
+            };
+            
+            // Helper function to render Markdown to HTML
+            const renderMarkdown = (markdownText) => {
+                let html = markdownText.replace(/^### (.*$)/gim, '<h3 class="text-xl font-semibold mt-4 mb-2">$1</h3>');
+                html = html.replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold mt-6 mb-3">$1</h2>');
+                html = html.replace(/^# (.*$)/gim, '<h1 class="text-3xl font-extrabold mt-8 mb-4">$1</h1>');
+                html = html.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
+                html = html.replace(/`(.*?)`/gim, '<code class="bg-gray-800 text-purple-300 rounded-md px-1 py-0.5">$1</code>');
+                html = html.replace(/```(.*?)```/gs, '<pre><code>$1</code></pre>');
+                html = html.replace(/\n/g, '<br/>');
+
+                return html;
+            };
+
+            // Attach event listener to the button
+            reviewButton.addEventListener('click', handleCodeReview);
 
 
             // --- Modal Functions ---
